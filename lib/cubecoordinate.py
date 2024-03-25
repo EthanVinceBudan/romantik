@@ -34,7 +34,10 @@ class CubeCoordinate:
         
     def __eq__(self, cc):
         return self.q == cc.q and self.r == cc.r and self.s == cc.s
-        
+
+    def __hash__(self) -> int:
+        return hash((self.q, self.r, self.s))
+
         
     def __str__(self):
         return f"<Cube coordinate ({self.__q}, {self.__r}, {self.__s})>"
