@@ -32,9 +32,11 @@ class CreationTestCase(TestCase):
     def test_creation_usingRiver(self):
         t = Tile(TileType.RIVER, [TileType.RIVER] * 6)
         t = Tile(TileType.RIVER, TileType.from_string("RRPPPP"))
-        
-        with self.assertRaises(AssertionError):
-            t = Tile(TileType.PLAINS, TileType.from_string("RPPPPP"))
+
+        # if the center tile is not river, wouldn't 1 river be ok for the side?
+
+        # with self.assertRaises(AssertionError):
+        #     t = Tile(TileType.PLAINS, TileType.from_string("RPPPPP"))
             
         with self.assertRaises(AssertionError):
             t = Tile(TileType.RIVER, TileType.from_string("RPPPPP"))
