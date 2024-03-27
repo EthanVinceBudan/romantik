@@ -55,18 +55,18 @@ class BoardNode:
         
 
 class Board:
-    _positions: dict[CubeCoordinate: BoardNode]
+    _nodemap: dict[CubeCoordinate: BoardNode]
     _border_coords: set[CubeCoordinate]
 
     def __init__(self):
-        self._positions = {}
+        self._nodemap = {}
         self._border_coords = set()
         self._build_new_board()
 
     def _build_new_board(self):
         origin = BoardNode(CubeCoordinate(0, 0, 0),
                            tile=Tile(TileType.PLAINS, [TileType.PLAINS] * 6))
-        self._positions[origin.get_location()] = origin
+        self._nodemap[origin.get_location()] = origin
         self.expand(origin.get_location())
 
     def expand(self, location: CubeCoordinate) -> int:
@@ -75,25 +75,25 @@ class Board:
 
         Returns number of tiles created
         """
-        if location not in self._positions:
+        if location not in self._nodemap:
             raise ValueError(
                 f"No tile found at location: {location}")
 
-        node = self._positions[location]
+        node = self._nodemap[location]
         self._border_coords.discard(location)
         created_count = 0
         for i, neighbor in enumerate(node._neighbors):
             if not neighbor:
                 # create a new neighbor and form link if slot is empty
                 new_node = BoardNode(location.adjacent(i), None)
-                self._positions[new_node.get_location()] = new_node
+                self._nodemap[new_node.get_location()] = new_node
                 node._neighbors[i] = new_node
 
                 # search existing nodes and form new two way connections
                 for j in range(6):
                     pos = new_node.get_location().adjacent(j)
-                    if pos in self._positions:
-                        existing_node = self._positions[pos]
+                    if pos in self._nodemap:
+                        existing_node = self._nodemap[pos]
                         new_node.set_neighbor(j, existing_node)
                         existing_node.set_neighbor(opposite(j), new_node)
                         if not existing_node.is_border():
@@ -105,14 +105,14 @@ class Board:
         return created_count
 
     def border_nodes(self):
-        return [self._positions[c] for c in self._border_coords]
+        return [self._nodemap[c] for c in self._border_coords]
 
         
-    size = property(fget = lambda s: len(s._positions))
+    size = property(fget = lambda s: len(s._nodemap))
     
         
     def all_nodes(self) -> list[BoardNode]:
-        return list(self._positions.values())
+        return list(self._nodemap.values())
 
         
     def __str__(self):
