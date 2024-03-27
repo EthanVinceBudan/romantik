@@ -108,8 +108,8 @@ class Board:
         return [self._positions[c] for c in self._border_coords]
 
         
-    def size(self):
-        return len(self._positions)
+    size = property(fget = lambda s: len(s._positions))
+    
         
     def all_nodes(self) -> list[BoardNode]:
         return list(self._positions.values())

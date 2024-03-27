@@ -7,7 +7,7 @@ class CreationTestCase(TestCase):
 
     def test_creation_normal(self):
         b = Board()
-        self.assertEqual(b.size(), 7)
+        self.assertEqual(b.size, 7)
         self.assertEqual(len(b.border_nodes()), 6)
         self.assertTrue(all(i in b._positions for i in b._border_coords))
         self.assertTrue(
@@ -28,7 +28,7 @@ class CreationTestCase(TestCase):
         new_count2 = b.expand(p2)
         self.assertEqual(new_count1, 3)
         self.assertEqual(new_count2, 2)
-        self.assertEqual(b.size(), 12)
+        self.assertEqual(b.size, 12)
         self.assertEqual(len(b.border_nodes()), 9)
         self.assertFalse(p1 in b._border_coords)
         self.assertFalse(p2 in b._border_coords)
