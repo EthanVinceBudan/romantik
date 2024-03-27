@@ -99,8 +99,8 @@ class Board:
                         if not existing_node.is_border():
                             self._border_coords.discard(
                                 existing_node.get_location())
-                    if new_node.is_border():
-                        self._border_coords.add(new_node.get_location())
+                if new_node.is_border():
+                    self._border_coords.add(new_node.get_location())
                 created_count += 1
         return created_count
 
