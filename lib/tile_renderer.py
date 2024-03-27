@@ -4,8 +4,8 @@ from lib.tile import Tile
 from lib.tile_settings import tile_settings, TileType
 from lib.cubecoordinate import CubeCoordinate
 import pygame
+import config
 
-SIDE_WIDTH = 16
 
 
 class TileRenderer:
@@ -27,10 +27,10 @@ class TileRenderer:
             [tile_settings[t].color for t in tile.get_sides()]
 
         outer = CubeCoordinate(0, 0, 0).get_vertices(
-            position, self.radius, 4)
+            position, self.radius, config.TILE_PADDING)
 
         inner = CubeCoordinate(0, 0, 0).get_vertices(
-            position, self.radius, 4 + SIDE_WIDTH)
+            position, self.radius, config.TILE_PADDING + config.TILE_SIDE_WIDTH)
 
         self.vertices = [inner]
 
